@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vika.airesumeanalyzer.model.ApiResponse;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.vika.airesumeanalyzer.model.Resume;
 
 @RestController
 public class HelloController {
@@ -38,6 +42,15 @@ public ApiResponse student(@PathVariable String name,
 
         return new ApiResponse(
                 "Student " + name + " is " + age + " years old.",
+                "Success",
+                "1.0"
+        );
+    }
+    @PostMapping("/resume")
+    public ApiResponse createResume(@RequestBody Resume resume) {
+
+        return new ApiResponse(
+                "Resume received successfully!",
                 "Success",
                 "1.0"
         );
