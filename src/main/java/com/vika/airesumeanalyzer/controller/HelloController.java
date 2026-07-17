@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.vika.airesumeanalyzer.model.Resume;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 @RestController
+@RequestMapping("/api")
 public class HelloController {
 
     @GetMapping("/hello/{name}")
@@ -35,7 +37,7 @@ public ApiResponse student(@PathVariable String name,
             "1.0"
     );
 }
-    @GetMapping("/studentinfo")
+    @GetMapping("/studentinfo") //request parameter is used
     public ApiResponse studentInfo(
             @RequestParam String name,
             @RequestParam int age) {
@@ -47,12 +49,14 @@ public ApiResponse student(@PathVariable String name,
         );
     }
     @PostMapping("/resume")
-    public ApiResponse createResume(@RequestBody Resume resume) {
+    public ResponseEntity<ApiResponse> createResume(@RequestBody Resume resume) {
 
-        return new ApiResponse(
-                "Resume received successfully!",
-                "Success",
-                "1.0"
-        );
+    	return ResponseEntity.status(201).body(
+    	        new ApiResponse(
+    	                "Resume received successfully!",
+    	                "Success",
+    	                "1.0"
+    	        )
+    	);
     }
 }
