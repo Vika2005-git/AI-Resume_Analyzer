@@ -1,5 +1,6 @@
 package com.vika.airesumeanalyzer.controller;
 
+import com.vika.airesumeanalyzer.service.ResumeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,11 @@ import org.springframework.http.ResponseEntity;
 @RestController
 @RequestMapping("/api")
 public class HelloController {
-
+     
+	private final ResumeService resumeService;
+	public HelloController(ResumeService resumeService) {
+	    this.resumeService = resumeService;
+	}
     @GetMapping("/hello/{name}")
     public ApiResponse hello(@PathVariable String name) {
 
@@ -51,9 +56,11 @@ public ApiResponse student(@PathVariable String name,
     @PostMapping("/resume")
     public ResponseEntity<ApiResponse> createResume(@RequestBody Resume resume) {
 
+    	String message=resumeService.processResume(); 
+    	
     	return ResponseEntity.status(201).body(
     	        new ApiResponse(
-    	                "Resume received successfully!",
+    	                message,
     	                "Success",
     	                "1.0"
     	        )
