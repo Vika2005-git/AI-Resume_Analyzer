@@ -1,11 +1,30 @@
 package com.vika.airesumeanalyzer.model;
+ 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+@Entity
+@Table(name= "resume")
 public class Resume {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Integer id;
 
     private String name;
     private String email;
     private String skills;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public Resume() {
     }
 
