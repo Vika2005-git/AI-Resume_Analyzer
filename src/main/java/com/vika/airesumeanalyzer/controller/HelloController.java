@@ -56,7 +56,7 @@ public ApiResponse student(@PathVariable String name,
     @PostMapping("/resume")
     public ResponseEntity<ApiResponse> createResume(@RequestBody Resume resume) {
 
-    	String message=resumeService.processResume(); 
+    	String message=resumeService.processResume(resume); 
     	
     	return ResponseEntity.status(201).body(
     	        new ApiResponse(
