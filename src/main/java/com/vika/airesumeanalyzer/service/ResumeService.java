@@ -1,5 +1,5 @@
 package com.vika.airesumeanalyzer.service;
-
+import java.util.List;
 import org.springframework.stereotype.Service; 
 import com.vika.airesumeanalyzer.repository.ResumeRepository;
 import com.vika.airesumeanalyzer.model.Resume;
@@ -14,5 +14,8 @@ public class ResumeService {
 public String processResume(Resume resume) {
 	resumeRepository.save(resume);
     return "Resume received successfully!";
+}
+public List<Resume> getAllResumes(){
+	return resumeRepository.findAll();
 }
 }

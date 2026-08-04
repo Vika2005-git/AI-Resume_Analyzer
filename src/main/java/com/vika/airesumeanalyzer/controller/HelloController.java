@@ -1,5 +1,5 @@
 package com.vika.airesumeanalyzer.controller;
-
+import java.util.List;
 import com.vika.airesumeanalyzer.service.ResumeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,6 +64,12 @@ public ApiResponse student(@PathVariable String name,
     	                "Success",
     	                "1.0"
     	        )
+    	        
     	);
     }
+
+@GetMapping("/resumes")
+public List<Resume> getAllResumes() {
+    return resumeService.getAllResumes();
+}
 }
