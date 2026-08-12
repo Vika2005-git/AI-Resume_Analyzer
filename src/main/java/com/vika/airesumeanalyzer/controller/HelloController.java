@@ -9,6 +9,8 @@ import com.vika.airesumeanalyzer.model.ApiResponse;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.vika.airesumeanalyzer.model.Resume;
@@ -66,6 +68,20 @@ public ApiResponse student(@PathVariable String name,
     	        )
     	        
     	);
+    }
+    
+    @PutMapping("/resume/{id}")
+    public ResponseEntity<Resume> updateResume(
+            @PathVariable Integer id,
+            @RequestBody Resume resume) {
+
+        Resume updatedResume = resumeService.updateResume(id, resume);
+
+        if (updatedResume == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updatedResume);
     }
 
 @GetMapping("/resumes")
