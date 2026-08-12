@@ -10,6 +10,7 @@ import com.vika.airesumeanalyzer.model.ApiResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -87,5 +88,17 @@ public ApiResponse student(@PathVariable String name,
 @GetMapping("/resumes")
 public List<Resume> getAllResumes() {
     return resumeService.getAllResumes();
+}
+
+@DeleteMapping("/resume/{id}")
+public ResponseEntity<String> deleteResume(@PathVariable Integer id) {
+
+    boolean deleted = resumeService.deleteResume(id);
+
+    if (deleted) {
+        return ResponseEntity.ok("Resume deleted successfully!");
+    }
+
+    return ResponseEntity.notFound().build();
 }
 }

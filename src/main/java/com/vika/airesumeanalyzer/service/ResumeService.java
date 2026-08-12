@@ -33,4 +33,12 @@ public Resume updateResume(Integer id,Resume updatedResume) {
 	return null;
 	
 }
+public boolean deleteResume(Integer id) {
+	if(resumeRepository.existsById(id)) {
+		resumeRepository.deleteById(id);
+		return true;
+	}
+	return false;
+}
+
 }
