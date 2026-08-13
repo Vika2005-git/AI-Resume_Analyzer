@@ -3,7 +3,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service; 
 import com.vika.airesumeanalyzer.repository.ResumeRepository;
+import com.vika.airesumeanalyzer.exception.ResumeNotFoundException;
 import com.vika.airesumeanalyzer.model.Resume;
+
 @Service
 public class ResumeService {
 	private final ResumeRepository resumeRepository;
@@ -19,6 +21,20 @@ public String processResume(Resume resume) {
 public List<Resume> getAllResumes(){
 	return resumeRepository.findAll();
 }
+
+public Resume getResumeById(Integer id) {
+
+    Optional<Resume> resume = resumeRepository.findById(id);
+
+    if (resume.isPresent()) {
+        return resume.get();
+    }
+
+    throw new ResumeNotFoundException(
+            "Resume with ID " + id + " not found"
+    );
+}
+
 public Resume updateResume(Integer id,Resume updatedResume) {
 	Optional<Resume> existingResume=resumeRepository.findById(id);
 	if(existingResume.isPresent()) {
@@ -30,7 +46,9 @@ public Resume updateResume(Integer id,Resume updatedResume) {
 
 		return resumeRepository.save(resume);
 	}
-	return null;
+	throw new ResumeNotFoundException(
+			"Resume with ID "+ id + "not found" 
+			);
 	
 }
 public boolean deleteResume(Integer id) {
@@ -38,7 +56,10 @@ public boolean deleteResume(Integer id) {
 		resumeRepository.deleteById(id);
 		return true;
 	}
-	return false;
+	 throw new ResumeNotFoundException(
+	            "Resume with ID " + id + " not found"
+	    );
+	
 }
 
 }

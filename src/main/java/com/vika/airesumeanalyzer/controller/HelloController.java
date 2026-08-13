@@ -92,6 +92,14 @@ public List<Resume> getAllResumes() {
     return resumeService.getAllResumes();
 }
 
+@GetMapping("/resume/{id}")
+public ResponseEntity<Resume> getResumeById(@PathVariable Integer id) {
+
+    Resume resume = resumeService.getResumeById(id);
+
+    return ResponseEntity.ok(resume);
+}
+
 @DeleteMapping("/resume/{id}")
 public ResponseEntity<String> deleteResume(@PathVariable Integer id) {
 
