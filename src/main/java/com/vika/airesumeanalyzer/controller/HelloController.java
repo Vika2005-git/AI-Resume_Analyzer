@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.vika.airesumeanalyzer.model.Resume;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class HelloController {
@@ -57,7 +59,7 @@ public ApiResponse student(@PathVariable String name,
         );
     }
     @PostMapping("/resume")
-    public ResponseEntity<ApiResponse> createResume(@RequestBody Resume resume) {
+    public ResponseEntity<ApiResponse> createResume(@Valid @RequestBody Resume resume) {
 
     	String message=resumeService.processResume(resume); 
     	
@@ -74,7 +76,7 @@ public ApiResponse student(@PathVariable String name,
     @PutMapping("/resume/{id}")
     public ResponseEntity<Resume> updateResume(
             @PathVariable Integer id,
-            @RequestBody Resume resume) {
+            @Valid @RequestBody Resume resume) {
 
         Resume updatedResume = resumeService.updateResume(id, resume);
 

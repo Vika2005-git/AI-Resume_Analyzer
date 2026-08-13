@@ -5,6 +5,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name= "resume")
@@ -13,9 +15,15 @@ public class Resume {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer id;
 
-    private String name;
-    private String email;
-    private String skills;
+@NotBlank
+private String name;
+
+@NotBlank
+@Email
+private String email;
+
+@NotBlank
+private String skills;
 
     public Integer getId() {
         return id;
