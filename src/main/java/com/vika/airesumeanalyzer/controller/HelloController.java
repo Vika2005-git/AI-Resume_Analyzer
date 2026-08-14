@@ -18,6 +18,7 @@ import com.vika.airesumeanalyzer.model.Resume;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
+import com.vika.airesumeanalyzer.dto.ResumeDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -59,9 +60,9 @@ public ApiResponse student(@PathVariable String name,
         );
     }
     @PostMapping("/resume")
-    public ResponseEntity<ApiResponse> createResume(@Valid @RequestBody Resume resume) {
+    public ResponseEntity<ApiResponse> createResume(@Valid @RequestBody ResumeDTO resumeDTO) {
 
-    	String message=resumeService.processResume(resume); 
+    	String message=resumeService.processResume(resumeDTO); 
     	
     	return ResponseEntity.status(201).body(
     	        new ApiResponse(
@@ -88,7 +89,7 @@ public ApiResponse student(@PathVariable String name,
     }
 
 @GetMapping("/resumes")
-public List<Resume> getAllResumes() {
+public List<ResumeDTO> getAllResumes() {
     return resumeService.getAllResumes();
 }
 

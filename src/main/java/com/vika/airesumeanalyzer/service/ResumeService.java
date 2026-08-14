@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.vika.airesumeanalyzer.repository.ResumeRepository;
 import com.vika.airesumeanalyzer.exception.ResumeNotFoundException;
 import com.vika.airesumeanalyzer.model.Resume;
+import com.vika.airesumeanalyzer.dto.ResumeDTO;
 
 @Service
 public class ResumeService {
@@ -14,12 +15,20 @@ public class ResumeService {
 	    this.resumeRepository = resumeRepository;
 	}
 
-public String processResume(Resume resume) {
-	resumeRepository.save(resume);
-    return "Resume received successfully!";
-}
-public List<Resume> getAllResumes(){
-	return resumeRepository.findAll();
+	public String processResume(ResumeDTO resumeDTO) {
+
+	    Resume resume = convertToEntity(resumeDTO);
+
+	    resumeRepository.save(resume);
+
+	    return "Resume received successfully!";
+	}
+
+public List<ResumeDTO> getAllResumes(){
+	List<Resume> resumes=resumeRepository.findAll();
+	return resumes.stream()
+			.map(this::convertToDTO)
+			.toList();
 }
 
 public Resume getResumeById(Integer id) {
@@ -60,6 +69,24 @@ public boolean deleteResume(Integer id) {
 	            "Resume with ID " + id + " not found"
 	    );
 	
+}
+private Resume convertToEntity(ResumeDTO dto) {
+
+    Resume resume = new Resume();
+
+    resume.setName(dto.getName());
+    resume.setEmail(dto.getEmail());
+    resume.setSkills(dto.getSkills());
+
+    return resume;
+}
+private ResumeDTO convertToDTO(Resume resume) {
+
+    return new ResumeDTO(
+            resume.getName(),
+            resume.getEmail(),
+            resume.getSkills()
+    );
 }
 
 }
