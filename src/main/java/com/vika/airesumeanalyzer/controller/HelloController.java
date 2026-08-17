@@ -112,4 +112,12 @@ public ResponseEntity<String> deleteResume(@PathVariable Integer id) {
 
     return ResponseEntity.notFound().build();
 }
+@GetMapping("/resumes/search")
+public ResponseEntity<List<ResumeDTO>> searchBySkill(
+        @RequestParam String skill) {
+
+    return ResponseEntity.ok(
+            resumeService.searchBySkill(skill)
+    );
+}
 }

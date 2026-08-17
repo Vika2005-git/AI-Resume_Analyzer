@@ -30,6 +30,15 @@ public List<ResumeDTO> getAllResumes(){
 			.map(this::convertToDTO)
 			.toList();
 }
+public List<ResumeDTO> searchBySkill(String skill) {
+
+    List<Resume> resumes =
+            resumeRepository.findBySkillsContainingIgnoreCase(skill);
+
+    return resumes.stream()
+            .map(this::convertToDTO)
+            .toList();
+}
 
 public Resume getResumeById(Integer id) {
 
