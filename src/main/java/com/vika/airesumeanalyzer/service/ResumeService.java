@@ -6,6 +6,8 @@ import com.vika.airesumeanalyzer.repository.ResumeRepository;
 import com.vika.airesumeanalyzer.exception.ResumeNotFoundException;
 import com.vika.airesumeanalyzer.model.Resume;
 import com.vika.airesumeanalyzer.dto.ResumeDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class ResumeService {
@@ -96,6 +98,10 @@ private ResumeDTO convertToDTO(Resume resume) {
             resume.getEmail(),
             resume.getSkills()
     );
+}
+public Page<ResumeDTO> getResumesWithPagination(Pageable pageable) {
+    Page<Resume> resumes = resumeRepository.findAll(pageable);
+    return resumes.map(this::convertToDTO);
 }
 
 }

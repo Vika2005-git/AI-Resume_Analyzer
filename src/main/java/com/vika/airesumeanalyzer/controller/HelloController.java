@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import com.vika.airesumeanalyzer.dto.ResumeDTO;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/api")
 public class HelloController {
@@ -120,4 +121,14 @@ public ResponseEntity<List<ResumeDTO>> searchBySkill(
             resumeService.searchBySkill(skill)
     );
 }
+
+@GetMapping("/resumes/page")
+public ResponseEntity<Page<ResumeDTO>> getResumesWithPagination(
+        Pageable pageable) {
+
+    return ResponseEntity.ok(
+            resumeService.getResumesWithPagination(pageable)
+    );
+}
+
 }
