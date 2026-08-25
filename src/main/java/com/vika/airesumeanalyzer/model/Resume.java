@@ -65,4 +65,5 @@ private String skills;
     public void setSkills(String skills) {
         this.skills = skills;
     }
+    
 }
