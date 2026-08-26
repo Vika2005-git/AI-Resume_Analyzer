@@ -76,15 +76,11 @@ public ApiResponse student(@PathVariable String name,
     }
     
     @PutMapping("/resume/{id}")
-    public ResponseEntity<Resume> updateResume(
+    public ResponseEntity<ResumeDTO> updateResume(
             @PathVariable Integer id,
-            @Valid @RequestBody Resume resume) {
+            @Valid @RequestBody ResumeDTO resumeDTO) {
 
-        Resume updatedResume = resumeService.updateResume(id, resume);
-
-        if (updatedResume == null) {
-            return ResponseEntity.notFound().build();
-        }
+        ResumeDTO updatedResume = resumeService.updateResume(id, resumeDTO);
 
         return ResponseEntity.ok(updatedResume);
     }

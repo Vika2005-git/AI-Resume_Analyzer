@@ -55,21 +55,26 @@ public Resume getResumeById(Integer id) {
     );
 }
 
-public Resume updateResume(Integer id,Resume updatedResume) {
-	Optional<Resume> existingResume=resumeRepository.findById(id);
-	if(existingResume.isPresent()) {
-		Resume resume=existingResume.get();
-		
-		resume.setName(updatedResume.getName());
-		resume.setEmail(updatedResume.getEmail());
-		resume.setSkills(updatedResume.getSkills());
+public ResumeDTO updateResume(Integer id, ResumeDTO updatedDTO) {
 
-		return resumeRepository.save(resume);
-	}
-	throw new ResumeNotFoundException(
-			"Resume with ID "+ id + "not found" 
-			);
-	
+    Optional<Resume> existingResume = resumeRepository.findById(id);
+
+    if (existingResume.isPresent()) {
+
+        Resume resume = existingResume.get();
+
+        resume.setName(updatedDTO.getName());
+        resume.setEmail(updatedDTO.getEmail());
+        resume.setSkills(updatedDTO.getSkills());
+
+        Resume updatedResume = resumeRepository.save(resume);
+
+        return convertToDTO(updatedResume);
+    }
+
+    throw new ResumeNotFoundException(
+            "Resume not found with id: " + id
+    );
 }
 public boolean deleteResume(Integer id) {
 	if(resumeRepository.existsById(id)) {
