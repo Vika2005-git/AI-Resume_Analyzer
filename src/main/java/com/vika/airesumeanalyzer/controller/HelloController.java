@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.vika.airesumeanalyzer.model.Resume;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import com.vika.airesumeanalyzer.dto.ResumeDTO;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 @RestController
@@ -91,9 +91,9 @@ public List<ResumeDTO> getAllResumes() {
 }
 
 @GetMapping("/resume/{id}")
-public ResponseEntity<Resume> getResumeById(@PathVariable Integer id) {
+public ResponseEntity<ResumeDTO> getResumeById(@PathVariable Integer id) {
 
-    Resume resume = resumeService.getResumeById(id);
+    ResumeDTO resume = resumeService.getResumeById(id);
 
     return ResponseEntity.ok(resume);
 }

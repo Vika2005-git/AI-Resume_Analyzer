@@ -42,16 +42,17 @@ public List<ResumeDTO> searchBySkill(String skill) {
             .toList();
 }
 
-public Resume getResumeById(Integer id) {
+public ResumeDTO getResumeById(Integer id) {
 
-    Optional<Resume> resume = resumeRepository.findById(id);
+    Optional<Resume> existingResume = resumeRepository.findById(id);
 
-    if (resume.isPresent()) {
-        return resume.get();
+    if (existingResume.isPresent()) {
+        Resume resume = existingResume.get();
+        return convertToDTO(resume);
     }
 
     throw new ResumeNotFoundException(
-            "Resume with ID " + id + " not found"
+            "Resume not found with id " + id 
     );
 }
 
