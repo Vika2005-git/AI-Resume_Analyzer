@@ -22,6 +22,8 @@ import com.vika.airesumeanalyzer.dto.ResumeDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
 @RestController
 @RequestMapping("/api")
 public class HelloController {
@@ -125,6 +127,30 @@ public ResponseEntity<Page<ResumeDTO>> getResumesWithPagination(
 
     return ResponseEntity.ok(
             resumeService.getResumesWithPagination(pageable)
+    );
+}
+
+@PostMapping("/resume/upload")
+public ResponseEntity<String> uploadResume(
+        @RequestParam("file") MultipartFile file) {
+
+    if (file.isEmpty()) {
+        return ResponseEntity.badRequest()
+                .body("Resume file cannot be empty");
+    }
+
+
+    String fileName = file.getOriginalFilename();
+
+    if (fileName == null ||
+            (!fileName.toLowerCase().endsWith(".pdf")
+            && !fileName.toLowerCase().endsWith(".docx"))) {
+        return ResponseEntity.badRequest()
+                .body("Only PDF and DOCX files are allowed");
+    }
+
+    return ResponseEntity.ok(
+            "Resume uploaded successfully: " + file.getOriginalFilename()
     );
 }
 
