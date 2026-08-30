@@ -1,6 +1,7 @@
 package com.vika.airesumeanalyzer.controller;
 import java.util.List;
 import com.vika.airesumeanalyzer.service.ResumeService;
+import com.vika.airesumeanalyzer.service.ResumeFileService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class HelloController {
      
 	private final ResumeService resumeService;
-	public HelloController(ResumeService resumeService) {
+	private final ResumeFileService resumeFileService;
+	public HelloController(ResumeService resumeService,
+			                ResumeFileService resumeFileService) {
 	    this.resumeService = resumeService;
+	    this.resumeFileService = resumeFileService;
 	}
     @GetMapping("/hello/{name}")
     public ApiResponse hello(@PathVariable String name) {
@@ -139,19 +143,27 @@ public ResponseEntity<String> uploadResume(
                 .body("Resume file cannot be empty");
     }
 
-
     String fileName = file.getOriginalFilename();
 
     if (fileName == null ||
             (!fileName.toLowerCase().endsWith(".pdf")
             && !fileName.toLowerCase().endsWith(".docx"))) {
+
         return ResponseEntity.badRequest()
                 .body("Only PDF and DOCX files are allowed");
     }
 
-    return ResponseEntity.ok(
-            "Resume uploaded successfully: " + file.getOriginalFilename()
-    );
+    try {
+
+        String extractedText = resumeFileService.extractText(file);
+
+        return ResponseEntity.ok(extractedText);
+
+    } catch (Exception e) {
+
+        return ResponseEntity.internalServerError()
+                .body("Unable to extract resume text");
+    }
 }
 
 }
