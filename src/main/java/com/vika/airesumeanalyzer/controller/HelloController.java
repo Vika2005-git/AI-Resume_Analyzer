@@ -24,6 +24,7 @@ import com.vika.airesumeanalyzer.dto.ResumeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
+import com.vika.airesumeanalyzer.service.GeminiService;
 
 @RestController
 @RequestMapping("/api")
@@ -31,10 +32,14 @@ public class HelloController {
      
 	private final ResumeService resumeService;
 	private final ResumeFileService resumeFileService;
+	private final GeminiService geminiService;
+
 	public HelloController(ResumeService resumeService,
-			                ResumeFileService resumeFileService) {
+			                ResumeFileService resumeFileService,
+			                GeminiService geminiService) {
 	    this.resumeService = resumeService;
 	    this.resumeFileService = resumeFileService;
+	    this.geminiService = geminiService;
 	}
     @GetMapping("/hello/{name}")
     public ApiResponse hello(@PathVariable String name) {
@@ -155,14 +160,19 @@ public ResponseEntity<String> uploadResume(
 
     try {
 
-        String extractedText = resumeFileService.extractText(file);
+        // Step 1: Extract text from resume
+        String resumeText = resumeFileService.extractText(file);
 
-        return ResponseEntity.ok(extractedText);
+        // Step 2: Send extracted text to Gemini
+        String analysis = geminiService.analyzeResume(resumeText);
+
+        // Step 3: Return AI analysis
+        return ResponseEntity.ok(analysis);
 
     } catch (Exception e) {
 
         return ResponseEntity.internalServerError()
-                .body("Unable to extract resume text");
+                .body("Unable to analyze resume" + e.getMessage());
     }
 }
 
