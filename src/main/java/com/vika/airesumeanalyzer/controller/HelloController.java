@@ -25,20 +25,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import com.vika.airesumeanalyzer.service.GeminiService;
+import org.apache.tika.Tika;
+import com.vika.airesumeanalyzer.dto.AiAnalysisDTO;
+
 
 @RestController
 @RequestMapping("/api")
 public class HelloController {
-     
+	private final Tika tika = new Tika();
 	private final ResumeService resumeService;
-	private final ResumeFileService resumeFileService;
-	private final GeminiService geminiService;
+    private final GeminiService geminiService;
 
 	public HelloController(ResumeService resumeService,
 			                ResumeFileService resumeFileService,
 			                GeminiService geminiService) {
 	    this.resumeService = resumeService;
-	    this.resumeFileService = resumeFileService;
+	   
 	    this.geminiService = geminiService;
 	}
     @GetMapping("/hello/{name}")
@@ -140,12 +142,11 @@ public ResponseEntity<Page<ResumeDTO>> getResumesWithPagination(
 }
 
 @PostMapping("/resume/upload")
-public ResponseEntity<String> uploadResume(
+public ResponseEntity<AiAnalysisDTO> uploadResume(
         @RequestParam("file") MultipartFile file) {
 
     if (file.isEmpty()) {
-        return ResponseEntity.badRequest()
-                .body("Resume file cannot be empty");
+        return ResponseEntity.badRequest().body(null);
     }
 
     String fileName = file.getOriginalFilename();
@@ -154,25 +155,25 @@ public ResponseEntity<String> uploadResume(
             (!fileName.toLowerCase().endsWith(".pdf")
             && !fileName.toLowerCase().endsWith(".docx"))) {
 
-        return ResponseEntity.badRequest()
-                .body("Only PDF and DOCX files are allowed");
+        return ResponseEntity.badRequest().body(null);
     }
 
     try {
 
         // Step 1: Extract text from resume
-        String resumeText = resumeFileService.extractText(file);
+        String resumeText = tika.parseToString(file.getInputStream());
 
         // Step 2: Send extracted text to Gemini
-        String analysis = geminiService.analyzeResume(resumeText);
+        AiAnalysisDTO analysis = geminiService.analyzeResume(resumeText);
 
         // Step 3: Return AI analysis
         return ResponseEntity.ok(analysis);
 
     } catch (Exception e) {
+        e.printStackTrace();
 
         return ResponseEntity.internalServerError()
-                .body("Unable to analyze resume" + e.getMessage());
+                .body(null);
     }
 }
 
