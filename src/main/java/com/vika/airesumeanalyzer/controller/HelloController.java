@@ -27,8 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vika.airesumeanalyzer.service.GeminiService;
 import org.apache.tika.Tika;
 import com.vika.airesumeanalyzer.dto.AiAnalysisDTO;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/api")
 public class HelloController {
