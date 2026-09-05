@@ -28,6 +28,7 @@ import com.vika.airesumeanalyzer.service.GeminiService;
 import org.apache.tika.Tika;
 import com.vika.airesumeanalyzer.dto.AiAnalysisDTO;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import com.vika.airesumeanalyzer.model.ErrorResponse;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
@@ -143,11 +144,15 @@ public ResponseEntity<Page<ResumeDTO>> getResumesWithPagination(
 }
 
 @PostMapping("/resume/upload")
-public ResponseEntity<AiAnalysisDTO> uploadResume(
+public ResponseEntity<?> uploadResume(
         @RequestParam("file") MultipartFile file) {
 
     if (file.isEmpty()) {
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body(new ErrorResponse(
+                400,
+                "Bad Request",
+                "Resume file cannot be empty"
+        ));
     }
 
     String fileName = file.getOriginalFilename();
@@ -156,7 +161,11 @@ public ResponseEntity<AiAnalysisDTO> uploadResume(
             (!fileName.toLowerCase().endsWith(".pdf")
             && !fileName.toLowerCase().endsWith(".docx"))) {
 
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body(new ErrorResponse(
+                400,
+                "Bad Request",
+                "Only PDF and DOCX files are allowed"
+        ));
     }
 
     try {
@@ -174,7 +183,11 @@ public ResponseEntity<AiAnalysisDTO> uploadResume(
         e.printStackTrace();
 
         return ResponseEntity.internalServerError()
-                .body(null);
+                .body(new ErrorResponse(
+                        500,
+                        "AI Analysis Failed/Internal error",
+                        e.getMessage()
+                ));
     }
 }
 
