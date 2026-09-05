@@ -44,15 +44,15 @@ A full-stack resume analysis application built using Java, Spring Boot, MySQL, a
 
 ### Resume Upload
 
-![Resume Upload](screenshots/resume-upload.png)
+![Resume Upload](proj-op-screenshot/resume-upload.png)
 
 ### AI Resume Analysis
 
-![Resume Analysis](screenshots/resume-analysis.png)
+![Resume Analysis](proj-op-screenshot/resume-analysis.png)
 
 ### Backend API
 
-![Postman API Response](screenshots/postman-response.png)
+![Postman API Response](proj-op-screenshot/postman-testing.png)
 
 ## 🔄 Application Flow
 
