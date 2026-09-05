@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 40px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#result {
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.analysis-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.score-card {
+    grid-column: 1 / -1;
+    padding: 25px;
+    border-radius: 10px;
+    background: white;
+}
+
+#atsScore {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.analysis-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.analysis-card h3 {
+    margin-top: 0;
+}
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .analysis-container {
+        grid-template-columns: 1fr;
+    }
+
+    .score-card {
+        grid-column: auto;
+    }
+}
+
+.container {
+    width: 600px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: white;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 10px;
+    color: #222;
+}
+
+p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+    padding: 10px;
+}
+
+button {
+    padding: 12px 24px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+#result {
+    margin-top: 30px;
+    text-align: left;
+}

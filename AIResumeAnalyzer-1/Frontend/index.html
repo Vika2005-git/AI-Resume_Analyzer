@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Resume Analyzer</h1>
+
+        <p>Upload your resume and get AI-powered feedback.</p>
+
+        <input type="file" id="resumeFile" accept=".pdf,.docx">
+
+        <br><br>
+
+        <button id="analyzeBtn">
+            Analyze Resume
+        </button>
+
+        
+    <div id="result">
+
+    <div class="analysis-container">
+
+        <div class="score-card">
+            <h2>ATS Score</h2>
+            <div id="atsScore">--</div>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Key Skills</h3>
+            <p id="keySkills">--</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Strengths</h3>
+            <p id="strengths">--</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Weaknesses</h3>
+            <p id="weaknesses">--</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Recommended Skills</h3>
+            <p id="recommendedSkills">--</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Improvement Suggestions</h3>
+            <p id="improvementSuggestions">--</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>Overall Assessment</h3>
+            <p id="overallAssessment">--</p>
+        </div>
+</div>
+            
+        </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
